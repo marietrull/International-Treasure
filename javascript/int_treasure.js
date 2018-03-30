@@ -48,8 +48,9 @@ document.addEventListener('keydown', function(event){
 	}
 	//clear old Cage and remove trail
 	ctx.clearRect(0,0, canvas.width, canvas.height)
-	nickCage.drawBody();
 	drawTreasure();
+	nickCage.drawBody();
+	// findTreasure();
 
 });
 
@@ -74,26 +75,13 @@ const timer = () => {
 	let time = 0;
 	setInterval(() => {
 		time +=1;
+		drawVillain();
 		createTreasure();
 		console.log(time);
 	}, 1000);
 }
 
-//FUNCTION TO CREATE TREASURE
-const createTreasure = () => {
-	//Set random coordinates for treasure
-	let tCoord = [randX(), randY()];
-	treasureCoord.push(tCoord);
-
-	//Show coordinate array
-	console.log(treasureCoord);
-	
-	drawTreasure();
-
-}
-
-
-//FUNCTIONS TO GENERATE RANDOM COORDINATE
+//FUNCTIONS TO GENERATE RANDOM COORDINATES
 const randX = () => {
 		return Math.floor(601 * Math.random());//Math.random will never allow us to get 255/we have to up it by one number. 
 }
@@ -102,12 +90,22 @@ const randY = () => {
 		return Math.floor(601* Math.random());//Math.random will never allow us to get 255/we have to up it by one number. 
 }
 
+
+//FUNCTION TO CREATE TREASURE
+const createTreasure = () => {
+	//Set random coordinates for treasure
+	let tCoord = [randX(), randY()];
+	treasureCoord.push(tCoord);
+
+	drawTreasure();
+}
+
 //FUNCTION FOR DRAWING TREASURE
 const drawTreasure = ()  => {
 	// loop over our arrray of treasures and draw each one
 
 	for(let i = 0; i < treasureCoord.length; i++) { 
-		console.log(treasureCoord[i])	
+		// console.log(treasureCoord[i])	
 		let xCoord = treasureCoord[i][0];
 		let yCoord = treasureCoord[i][1];
 		
@@ -118,22 +116,43 @@ const drawTreasure = ()  => {
 		ctx.fill();
 		ctx.closePath();
 	}
+	nickCage.drawBody()
+}
 
+//FUNCTION TO CREATE VILLAIN
 
+const drawVillain = () => {
+	let xCoord = randX();
+	let yCoord = randY();
+
+	ctx.beginPath();
+	ctx.arc(xCoord, yCoord, 10, 0, 2 * Math.PI);
+	ctx.fillStyle = 'red';
+	ctx.fill();
+	ctx.closePath();
 }
 
 
-//FUNCTION FOR DRAWING TREASURE
-const somethingElse = ()  => {
-	// // Compare Snake's current location to location of treasure arrays
+// //FUNCTION FOR FINDING TREASURE
+// const findTreasure = ()  => {
 
-	// if ()
+// 	for (let i = 0; i < treasureCoord.length; i++){
+// 		let xCoord = treasureCoord[i][0];
+// 		let yCoord = treasureCoord[i][1];
 
-	// // If the snake hits treasure, add to treasure points and remove treasure circle
+// 		if (nickCage.body.x === xCoord && nickCage.body.y === yCoord){
+// 			console.log("Treasure Found!");
+// 		}
+// 	}
+// 	// Get Nick's location
 
-	// // else keep on keepin' on
+// 	// Compare Nick's location to the treasure coordinates (give 10px variance)
 
- }
+// 	// // If Nick hits treasure, add to treasure points and remove treasure circle
+
+// 	// // else keep on keepin' on
+
+//  }
 
 
 //CALL FUNCTIONS
