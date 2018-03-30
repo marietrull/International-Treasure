@@ -6,6 +6,7 @@ const ctx = canvas.getContext('2d');
 
 //CREATE CHARACTER
 const move = 10;
+const treasureCoord = [];
 const nickCage = {
 	body: {
 
@@ -13,9 +14,9 @@ const nickCage = {
 	initialize() {
 		//set up our hero
 		this.body = {
-			x: 100,
+			x: 50,
 			y: 400,
-			r: 12.5,
+			r: 5,
 			e:0
 		}
 	},
@@ -48,6 +49,7 @@ document.addEventListener('keydown', function(event){
 	//clear old Cage and remove trail
 	ctx.clearRect(0,0, canvas.width, canvas.height)
 	nickCage.drawBody();
+	drawTreasure();
 
 });
 
@@ -57,6 +59,15 @@ document.addEventListener('keydown', function(event){
 $('#start').on('click', () => {
 	timer();
 });
+
+//GIVE RESTART BUTTON FUNCTIONALITY
+$('#restart').on('click', () => {
+	location.reload();
+});
+
+nickCage.initialize();
+nickCage.drawBody();
+
 
 // CREATE TIMER
 const timer = () => {
@@ -70,27 +81,61 @@ const timer = () => {
 
 //FUNCTION TO CREATE TREASURE
 const createTreasure = () => {
-		ctx.beginPath();
-		ctx.arc(randX(), randY(), 5, 0, 2 * Math.PI);
-		ctx.fillStyle = 'blue';
-		ctx.fill();
-		ctx.closePath();
+	//Set random coordinates for treasure
+	let tCoord = [randX(), randY()];
+	treasureCoord.push(tCoord);
+
+	//Show coordinate array
+	console.log(treasureCoord);
+	
+	drawTreasure();
+
 }
 
 
 //FUNCTIONS TO GENERATE RANDOM COORDINATE
 const randX = () => {
-		return Math.floor(1001 * Math.random());//Math.random will never allow us to get 255/we have to up it by one number. 
+		return Math.floor(601 * Math.random());//Math.random will never allow us to get 255/we have to up it by one number. 
 }
 
 const randY = () => {
-		return Math.floor(451* Math.random());//Math.random will never allow us to get 255/we have to up it by one number. 
+		return Math.floor(601* Math.random());//Math.random will never allow us to get 255/we have to up it by one number. 
 }
 
-//GIVE RESTART BUTTON FUNCTIONALITY
-$('#restart').on('click', () => {
-	location.reload();
-});
+//FUNCTION FOR DRAWING TREASURE
+const drawTreasure = ()  => {
+	// loop over our arrray of treasures and draw each one
 
+	for(let i = 0; i < treasureCoord.length; i++) { 
+		console.log(treasureCoord[i])	
+		let xCoord = treasureCoord[i][0];
+		let yCoord = treasureCoord[i][1];
+		
+
+		ctx.beginPath();
+		ctx.arc(xCoord, yCoord, 5, 0, 2 * Math.PI);
+		ctx.fillStyle = 'blue';
+		ctx.fill();
+		ctx.closePath();
+	}
+
+
+}
+
+
+//FUNCTION FOR DRAWING TREASURE
+const somethingElse = ()  => {
+	// // Compare Snake's current location to location of treasure arrays
+
+	// if ()
+
+	// // If the snake hits treasure, add to treasure points and remove treasure circle
+
+	// // else keep on keepin' on
+
+ }
+
+
+//CALL FUNCTIONS
 nickCage.initialize();
 nickCage.drawBody();
