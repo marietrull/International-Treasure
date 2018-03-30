@@ -9,11 +9,19 @@ body{
 	justify-content: space-around;
 }
 
+.buttons {
+	display: flex;
+	flex-direction: column;
+	justify-content: space-around;
+	height: 39%;
+	padding-top: 10px;
+}
+
 #about {
-	background-color: white;
-	border: 2.5px solid black;
+/*	background-color: white;
+	border: 2.5px solid black;*/
 	width: 20%;
-	height: 450px;
+	height: 445px;
 }
 
 #my-canvas {
@@ -22,4 +30,25 @@ body{
 	width: 70%;
 	height: 450px;
 
+}
+
+#stats {
+	background-color: white;
+	border: 1px solid black;
+	height: 60%;
+}
+
+#start {
+	border: 1px solid black;
+	flex-grow: 1;
+}
+
+#restart {
+	border: 1px solid black;
+	flex-grow: 1;
+}
+
+#instructions {
+	border: 1px solid black;
+	flex-grow: 1;
 }
