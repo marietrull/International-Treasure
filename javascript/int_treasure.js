@@ -7,6 +7,8 @@ const ctx = canvas.getContext('2d');
 //CREATE CHARACTER
 const move = 10;
 const treasureCoord = [];
+let villainX = 100;
+let villainY = 100;
 const nickCage = {
 	body: {
 
@@ -49,7 +51,9 @@ document.addEventListener('keydown', function(event){
 	//clear old Cage and remove trail
 	ctx.clearRect(0,0, canvas.width, canvas.height)
 	drawTreasure();
+	drawVillain();
 	nickCage.drawBody();
+
 	// findTreasure();
 
 });
@@ -73,10 +77,15 @@ nickCage.drawBody();
 // CREATE TIMER
 const timer = () => {
 	let time = 0;
+	console.log(time);
 	setInterval(() => {
 		time +=1;
-		drawVillain();
-		createTreasure();
+		if (time % 10 === 0){
+			createTreasure();
+			moveVillain();
+		} else if (time % 6 === 0){
+			drawTreasure();
+		}
 		console.log(time);
 	}, 1000);
 }
@@ -116,20 +125,26 @@ const drawTreasure = ()  => {
 		ctx.fill();
 		ctx.closePath();
 	}
-	nickCage.drawBody()
+	// nickCage.drawBody()
 }
 
 //FUNCTION TO CREATE VILLAIN
 
 const drawVillain = () => {
-	let xCoord = randX();
-	let yCoord = randY();
-
 	ctx.beginPath();
-	ctx.arc(xCoord, yCoord, 10, 0, 2 * Math.PI);
+	ctx.arc(villainX, villainY, 10, 0, 2 * Math.PI);
 	ctx.fillStyle = 'red';
 	ctx.fill();
 	ctx.closePath();
+}
+
+//FUNCTION TO MOVE VILLAIN
+
+const moveVillain = () => {
+	
+	villainX = randX();
+	villainY = randY();
+
 }
 
 
