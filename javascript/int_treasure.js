@@ -182,7 +182,13 @@ const villainCollide = ()  => {
 
 		if(cageBodyX + r > xCoord - r && cageBodyX - r < xCoord + r && cageBodyY - r < yCoord + r && cageBodyY + r > yCoord + r){
 			healthPoints -= 1;
-			console.log("Nick was attacked by a Villain!");
+			if(healthPoints >= 0){
+				$('#health').text("Health: " + healthPoints);
+				console.log("Nick was attacked by a Villain!");
+			} else {
+				window.alert("Sean Bean got your ass! Game over.")
+				location.reload();
+			}
 		} 
 	}
 }
@@ -193,13 +199,18 @@ const collectTreasure = () => {
 	let cageBodyY = nickCage.body.y;
 	const r = 5;
 
-	for(let i = -2; i < 2; i++){
+	for(let i = -5; i < 5; i++){
  		if(cageBodyX + r > treasureX - r && cageBodyX - r < treasureX + r && cageBodyY - r < treasureY + r && cageBodyY + r > treasureY + r){
- 		console.log("Nick found his treasure!");
- 		moveTreasure();
- 		treasurePoints += 1;
- 		console.log()
- 		}
+ 			console.log("Nick found his treasure!");
+ 			moveTreasure();
+ 			treasurePoints += 1;
+ 			if(treasurePoints < 5){
+ 				$('#treasure').text("Treasure: " + treasurePoints);
+ 			} else {
+ 				window.alert("You managed to collect all of the treasure! You Win!");
+ 				location.reload();
+ 			}
+		}
 	}
 }
 

@@ -2,10 +2,38 @@ body{
 	background-color: #B28C6B;
 }
 
+#my-canvas {
+	background-image: url("https://i.imgur.com/rDWs2S1.png");
+	border: 2.5px solid black;
+	width: 70%;
+	height: 450px;
+
+}
+
 .container1 {
 	display: flex;
 	margin-left: auto;
 	margin-right: auto;
+	justify-content: space-around;
+}
+
+
+#about {
+/*	background-color: white;
+	border: 2.5px solid black;*/
+	width: 20%;
+	height: 445px;
+	display: flex;
+	flex-direction: column;
+}
+
+#stats {
+	padding: 5px;
+	background-color: white;
+	border: 1px solid black;
+	height: 60%;
+	display: flex;
+	flex-direction: column;
 	justify-content: space-around;
 }
 
@@ -17,26 +45,6 @@ body{
 	padding-top: 10px;
 }
 
-#about {
-/*	background-color: white;
-	border: 2.5px solid black;*/
-	width: 20%;
-	height: 445px;
-}
-
-#my-canvas {
-	background-image: url("https://i.imgur.com/rDWs2S1.png");
-	border: 2.5px solid black;
-	width: 70%;
-	height: 450px;
-
-}
-
-#stats {
-	background-color: white;
-	border: 1px solid black;
-	height: 60%;
-}
 
 #start {
 	border: 1px solid black;
