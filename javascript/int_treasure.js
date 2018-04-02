@@ -5,23 +5,29 @@ const canvas = document.getElementById('my-canvas');
 const ctx = canvas.getContext('2d');
 
 //CREATE CHARACTER
-const move = 10;
-const treasureCoord = [];
-let villainX = 100;
-let villainY = 100;
+const move = 10;  				//how far he will move with each keystroke
+const villainCoord = [];		//array to store the villains' coordinates
+let treasurePoints = 0;			//variable to store treasure score
+let healthPoints = 3;			//variable to store health points
+let treasureX = 100;			//initial treasure x coordinate location
+let treasureY = 100;			//initial treasure y coordinate
+
+
+
+//Character Class
 const nickCage = {
 	body: {
 
 	},
 	initialize() {
-		//set up our hero
+		//Method to setup Nick
 		this.body = {
 			x: 50,
 			y: 400,
 			r: 5,
 			e:0
 		}
-	},
+	}, //Method to draw Nick
 	drawBody() {
 		ctx.beginPath();
 		ctx.arc(this.body.x, this.body.y, this.body.r, this.body.e, Math.PI * 2)
@@ -38,23 +44,26 @@ document.addEventListener('keydown', function(event){
 	if(key == 37 && nickCage.body.x > 0){
 		nickCage.body.x = nickCage.body.x-move;
 		nickCage.direction = 'left';
-		findTreasure();
-		collideVillain();
+		collectTreasure();
+		villainCollide();
+		
 	} else if (key ==38 && nickCage.body.y > 0) {
 		nickCage.body.y = nickCage.body.y-move;
 		nickCage.direction = 'up';
-		findTreasure();
-		collideVillain();
+		collectTreasure();
+		villainCollide();
+		
 	} else if (key==39 && nickCage.body.x < 600){
 		nickCage.body.x = nickCage.body.x+move;
 		nickCage.direction = 'right';
-		findTreasure();
-		collideVillain();
+		collectTreasure();
+		villainCollide();
+		
 	} else if (key==40 && nickCage.body.y < 600){
 		nickCage.body.y = nickCage.body.y+move;
 		nickCage.direction = 'down';
-		collideVillain();
-		findTreasure();
+		collectTreasure();
+		villainCollide();
 	}
 	//clear old Cage and remove trail
 	ctx.clearRect(0,0, canvas.width, canvas.height)
@@ -85,15 +94,17 @@ const timer = () => {
 	let treasure = 0;
 	console.log(time);
 	setInterval(() => {
+		//track the time
 		time +=1;
-		if (time % 10 === 0 && treasure < 10){
-			treasure += 1;
-			createTreasure();
-			
+
+		//create a new villain every ten seconds
+		if (time % 10 === 0){
+			createVillain();
+
+		//move treasure every six seconds
 		} else if (time % 6 === 0){
-			moveVillain();
+			moveTreasure();
 		}
-		// createTreasure();
 		//console.log(time);
 	}, 1000);
 }
@@ -108,25 +119,27 @@ const randY = () => {
 }
 
 
-//FUNCTION TO CREATE TREASURE
-const createTreasure = () => {
-	//Set random coordinates for treasure
+//FUNCTION TO CREATE VILLAIN
+const createVillain = () => {
+	//Set random coordinates for villain
 	let tCoord = [randX(), randY()];
-	treasureCoord.push(tCoord);
+	//Store villain location in array
+	villainCoord.push(tCoord);
 
-	drawTreasure();
+	//draw the villain
+	drawVillain();
 }
 
 //FUNCTION FOR DRAWING TREASURE
-const drawTreasure = ()  => {
-	// loop over our arrray of treasures and draw each one
+const drawVillain = ()  => {
+	// loop over our arrray of villains and draw each one
 
-	for(let i = 0; i < treasureCoord.length; i++) { 
-		// console.log(treasureCoord[i])	
-		let xCoord = treasureCoord[i][0];
-		let yCoord = treasureCoord[i][1];
+	for(let i = 0; i < villainCoord.length; i++) { 
+		// set coordinates for each villain	
+		let xCoord = villainCoord[i][0];
+		let yCoord = villainCoord[i][1];
 		
-
+		//actually draw the villain
 		ctx.beginPath();
 		ctx.arc(xCoord, yCoord, 5, 0, 2 * Math.PI);
 		ctx.fillStyle = 'blue';
@@ -136,55 +149,57 @@ const drawTreasure = ()  => {
 	// nickCage.drawBody()
 }
 
-//FUNCTION TO CREATE VILLAIN
+//FUNCTION TO DRAW TREASURE
 
-const drawVillain = () => {
+const drawTreasure = () => {
 	ctx.beginPath();
-	ctx.arc(villainX, villainY, 10, 0, 2 * Math.PI);
+	ctx.arc(treasureX, treasureY, 10, 0, 2 * Math.PI);
 	ctx.fillStyle = 'red';
 	ctx.fill();
 	ctx.closePath();
 }
 
-//FUNCTION TO MOVE VILLAIN
+//FUNCTION TO MOVE TREASURE
 
-const moveVillain = () => {
+const moveTreasure = () => {
 	
-	villainX = randX();
-	villainY = randY();
+	treasureX = randX();
+	treasureY = randY();
 
 }
 
 
-//FUNCTION FOR FINDING TREASURE
-const findTreasure = ()  => {
+//FUNCTION FOR VILLAIN COLLISION
+const villainCollide = ()  => {
 
-	for (let i = 0; i < treasureCoord.length; i++){
+	for (let i = 0; i < villainCoord.length; i++){
 		// Grab Treasure's Coordinates
 		let cageBodyX = nickCage.body.x;
 		let cageBodyY = nickCage.body.y;
-		let xCoord = treasureCoord[i][0];
-		let yCoord = treasureCoord[i][1];
+		let xCoord = villainCoord[i][0];
+		let yCoord = villainCoord[i][1];
 		const r = 5;
 
-		for(let i = -2; i < 2; i++){
-			if(cageBodyX + r > xCoord - r && cageBodyX - r < xCoord + r && cageBodyY - r < yCoord + r && cageBodyY + r > yCoord + r){
-					console.log("He found his treasure!");
-			}
+		if(cageBodyX + r > xCoord - r && cageBodyX - r < xCoord + r && cageBodyY - r < yCoord + r && cageBodyY + r > yCoord + r){
+			healthPoints -= 1;
+			console.log("Nick was attacked by a Villain!");
 		} 
 	}
 }
  
 //FUNCTION FOR COLLISION DETECTION W/ VILLAIN
-const collideVillain = () => {
+const collectTreasure = () => {
 	let cageBodyX = nickCage.body.x;
 	let cageBodyY = nickCage.body.y;
 	const r = 5;
 
 	for(let i = -2; i < 2; i++){
- 		if(cageBodyX + r > villainX - r && cageBodyX - r < villainX + r && cageBodyY - r < villainY + r && cageBodyY + r > villainY + r){
- 		console.log("Nick encountered a villain!");
-		}
+ 		if(cageBodyX + r > treasureX - r && cageBodyX - r < treasureX + r && cageBodyY - r < treasureY + r && cageBodyY + r > treasureY + r){
+ 		console.log("Nick found his treasure!");
+ 		moveTreasure();
+ 		treasurePoints += 1;
+ 		console.log()
+ 		}
 	}
 }
 
@@ -192,4 +207,4 @@ const collideVillain = () => {
 //CALL FUNCTIONS
 nickCage.initialize();
 nickCage.drawBody();
-drawVillain();
+drawTreasure();
