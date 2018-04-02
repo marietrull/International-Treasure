@@ -70,22 +70,22 @@ $('#restart').on('click', () => {
 	location.reload();
 });
 
-nickCage.initialize();
-nickCage.drawBody();
-
 
 // CREATE TIMER
 const timer = () => {
 	let time = 0;
+	let treasure = 0;
 	console.log(time);
 	setInterval(() => {
 		time +=1;
-		if (time % 10 === 0){
+		if (time % 10 === 0 && treasure < 10){
+			treasure += 1;
 			createTreasure();
-			moveVillain();
+			
 		} else if (time % 6 === 0){
-			drawTreasure();
+			moveVillain();
 		}
+		findTreasure();
 		console.log(time);
 	}, 1000);
 }
@@ -148,26 +148,29 @@ const moveVillain = () => {
 }
 
 
-// //FUNCTION FOR FINDING TREASURE
-// const findTreasure = ()  => {
+//FUNCTION FOR FINDING TREASURE
+const findTreasure = ()  => {
 
-// 	for (let i = 0; i < treasureCoord.length; i++){
-// 		let xCoord = treasureCoord[i][0];
-// 		let yCoord = treasureCoord[i][1];
+	for (let i = 0; i < treasureCoord.length; i++){
+		// Grab Treasure's Coordinates
+		let xCoord = treasureCoord[i][0];
+		let yCoord = treasureCoord[i][1];
 
-// 		if (nickCage.body.x === xCoord && nickCage.body.y === yCoord){
-// 			console.log("Treasure Found!");
-// 		}
-// 	}
-// 	// Get Nick's location
+		checkCoords(xCoord, yCoord);
 
-// 	// Compare Nick's location to the treasure coordinates (give 10px variance)
+	}
 
-// 	// // If Nick hits treasure, add to treasure points and remove treasure circle
+ }
 
-// 	// // else keep on keepin' on
-
-//  }
+//FUNCTION FOR COLLISION DETECTION ON X AXIS
+ const checkCoords = (xCoord, yCoord) => {
+ 	for (let i = -5; i < 5; i++){
+ 		if (nickCage.body.x + i == xCoord && nickCage.body.y + i == yCoord){
+		console.log("X Coordinate: + " + xCoord + " Match!");
+		console.log("Y Coordinate + " + yCoord + " Match!");
+		}
+	}
+}
 
 
 //CALL FUNCTIONS
