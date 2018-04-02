@@ -38,15 +38,23 @@ document.addEventListener('keydown', function(event){
 	if(key == 37 && nickCage.body.x > 0){
 		nickCage.body.x = nickCage.body.x-move;
 		nickCage.direction = 'left';
+		findTreasure();
+		collideVillain();
 	} else if (key ==38 && nickCage.body.y > 0) {
 		nickCage.body.y = nickCage.body.y-move;
 		nickCage.direction = 'up';
+		findTreasure();
+		collideVillain();
 	} else if (key==39 && nickCage.body.x < 600){
 		nickCage.body.x = nickCage.body.x+move;
 		nickCage.direction = 'right';
+		findTreasure();
+		collideVillain();
 	} else if (key==40 && nickCage.body.y < 600){
 		nickCage.body.y = nickCage.body.y+move;
 		nickCage.direction = 'down';
+		collideVillain();
+		findTreasure();
 	}
 	//clear old Cage and remove trail
 	ctx.clearRect(0,0, canvas.width, canvas.height)
@@ -85,8 +93,8 @@ const timer = () => {
 		} else if (time % 6 === 0){
 			moveVillain();
 		}
-		findTreasure();
-		console.log(time);
+		// createTreasure();
+		//console.log(time);
 	}, 1000);
 }
 
@@ -153,21 +161,29 @@ const findTreasure = ()  => {
 
 	for (let i = 0; i < treasureCoord.length; i++){
 		// Grab Treasure's Coordinates
+		let cageBodyX = nickCage.body.x;
+		let cageBodyY = nickCage.body.y;
 		let xCoord = treasureCoord[i][0];
 		let yCoord = treasureCoord[i][1];
+		const r = 5;
 
-		checkCoords(xCoord, yCoord);
-
+		for(let i = -2; i < 2; i++){
+			if(cageBodyX + r > xCoord - r && cageBodyX - r < xCoord + r && cageBodyY - r < yCoord + r && cageBodyY + r > yCoord + r){
+					console.log("He found his treasure!");
+			}
+		} 
 	}
+}
+ 
+//FUNCTION FOR COLLISION DETECTION W/ VILLAIN
+const collideVillain = () => {
+	let cageBodyX = nickCage.body.x;
+	let cageBodyY = nickCage.body.y;
+	const r = 5;
 
- }
-
-//FUNCTION FOR COLLISION DETECTION ON X AXIS
- const checkCoords = (xCoord, yCoord) => {
- 	for (let i = -5; i < 5; i++){
- 		if (nickCage.body.x + i == xCoord && nickCage.body.y + i == yCoord){
-		console.log("X Coordinate: + " + xCoord + " Match!");
-		console.log("Y Coordinate + " + yCoord + " Match!");
+	for(let i = -2; i < 2; i++){
+ 		if(cageBodyX + r > villainX - r && cageBodyX - r < villainX + r && cageBodyY - r < villainY + r && cageBodyY + r > villainY + r){
+ 		console.log("Nick encountered a villain!");
 		}
 	}
 }
@@ -176,3 +192,4 @@ const findTreasure = ()  => {
 //CALL FUNCTIONS
 nickCage.initialize();
 nickCage.drawBody();
+drawVillain();
