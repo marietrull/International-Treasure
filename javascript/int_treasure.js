@@ -29,11 +29,26 @@ const nickCage = {
 		}
 	}, //Method to draw Nick
 	drawBody() {
+		// Create an image element
+		var cageFace = document.createElement('IMG');
+ 
+		// When the image is loaded, draw it
+		cageFace.onload = function () {
+
+		// ctx.save();
+
 		ctx.beginPath();
-		ctx.arc(this.body.x, this.body.y, this.body.r, this.body.e, Math.PI * 2)
-		ctx.fillStyle = "#000";
-		ctx.fill();
-		ctx.closePath();
+		// ctx.arc(200 , 200,200,0,Math.PI*2, false);
+
+		// ctx.clip();
+
+    	ctx.drawImage(cageFace, nickCage.body.x, nickCage.body.y);
+
+    	// ctx.restore();
+		}
+ 
+	// Specify the src to load the image
+	cageFace.src = "https://i.imgur.com/pBMjycK.png";
 	},
 	
 }
@@ -86,6 +101,11 @@ $('#start').on('click', () => {
 $('#restart').on('click', () => {
 	location.reload();
 });
+
+//GIVE INSTRUCTIONS BUTTON FUNCTIONALITY
+$('#instructions').on('click', () =>{
+	$('#rules').toggle(0);
+})
 
 
 // CREATE TIMER
@@ -142,7 +162,7 @@ const drawVillain = ()  => {
 		//actually draw the villain
 		ctx.beginPath();
 		ctx.arc(xCoord, yCoord, 5, 0, 2 * Math.PI);
-		ctx.fillStyle = 'blue';
+		ctx.fillStyle = "blue";
 		ctx.fill();
 		ctx.closePath();
 	}
@@ -178,11 +198,12 @@ const villainCollide = ()  => {
 		let cageBodyY = nickCage.body.y;
 		let xCoord = villainCoord[i][0];
 		let yCoord = villainCoord[i][1];
-		const r = 5;
+		const r = 10;
 
 		if(cageBodyX + r > xCoord - r && cageBodyX - r < xCoord + r && cageBodyY - r < yCoord + r && cageBodyY + r > yCoord + r){
 			healthPoints -= 1;
-			if(healthPoints >= 0){
+			// $('#pic').attr('src','https://i.pinimg.com/originals/9e/75/21/9e752154d02bc3ebdc9e07656d522e1b.jpg');
+			if(healthPoints > 0){
 				$('#health').text("Health: " + healthPoints);
 				console.log("Nick was attacked by a Villain!");
 			} else {
@@ -197,7 +218,7 @@ const villainCollide = ()  => {
 const collectTreasure = () => {
 	let cageBodyX = nickCage.body.x;
 	let cageBodyY = nickCage.body.y;
-	const r = 5;
+	const r = 10;
 
 	for(let i = -5; i < 5; i++){
  		if(cageBodyX + r > treasureX - r && cageBodyX - r < treasureX + r && cageBodyY - r < treasureY + r && cageBodyY + r > treasureY + r){
