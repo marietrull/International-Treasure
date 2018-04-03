@@ -7,9 +7,10 @@ const ctx = canvas.getContext('2d');
 //CREATE CHARACTER
 const move = 10;  				//how far he will move with each keystroke
 const villainCoord = [];		//array to store the villains' coordinates
+const villain = document.createElement('IMG');  //villain image
 let treasurePoints = 0;			//variable to store treasure score
 let healthPoints = 5;			//variable to store health points
-let treasureX = 100;			//initial treasure x coordinate location
+let treasureX = 400;			//initial treasure x coordinate location
 let treasureY = 100;			//initial treasure y coordinate
 
 
@@ -82,6 +83,54 @@ document.addEventListener('keydown', function(event){
 
 });
 
+//PICK YOUR NICK BUTTON FUNCTIONALITY
+$('#arizona').on('click', () => {
+	$('.topAndBottom').toggle(0);
+	changeNick('https://i.imgur.com/v4AQ7Ck.jpg');
+	changeBack('https://i.imgur.com/7NejvCm.png');
+})
+
+$('#independence').on('click', () => {
+	$('.topAndBottom').toggle(0);
+	changeNick('https://i.imgur.com/507apQg.jpg');
+	changeBack('https://i.imgur.com/rDWs2S1.png');
+	
+})
+
+$('#kaz').on('click', () => {
+	$('.topAndBottom').toggle(0);
+	changeNick('https://i.imgur.com/B1K4WmO.jpg');
+	changeBack('https://i.imgur.com/FaGsyVr.png');
+	
+})
+
+$('#hell').on('click', () => {
+	$('.topAndBottom').toggle(0);
+	changeNick('https://i.imgur.com/dMQ2CeY.jpg');
+	changeBack('https://i.imgur.com/DUAEDBu.jpg');
+})
+
+$('#vamp').on('click', () => {
+	$('.topAndBottom').toggle(0);
+	changeNick('https://i.imgur.com/Id0TNTj.jpg');
+	changeBack('https://i.imgur.com/nF1Bbrj.jpg');
+})
+
+//FUNCTION TO CHANGE CANVAS BACKGROUND
+
+const changeBack = (imageLink) => {
+	const image = "url("+imageLink+")"
+	$('#my-canvas').css('background-image', image);
+	
+}
+
+//FUNCTION TO CHANGE NICK
+
+const changeNick = (imageLink) => {
+	const image = imageLink;
+	//console.log(image, ' this is image lingk');
+	$('#nickPic').attr('src', image);
+}
 
 //GIVE START BUTTON FUNCTIONALITY
 
@@ -150,14 +199,12 @@ const drawVillain = ()  => {
 		// set coordinates for each villain	
 		let xCoord = villainCoord[i][0];
 		let yCoord = villainCoord[i][1];
-		
-		const bean = document.createElement('IMG');
-		bean.onload = function () {
+		villain.onload = function () {
 			ctx.beginPath();
-    		ctx.drawImage(bean, xCoord, yCoord);
+    		ctx.drawImage(villain, xCoord, yCoord);
     		ctx.closePath();
 			}
-		bean.src = "https://i.imgur.com/9ePZ2di.png";
+		villain.src = "https://i.imgur.com/9ePZ2di.png";
 	}
 	// nickCage.drawBody()
 }

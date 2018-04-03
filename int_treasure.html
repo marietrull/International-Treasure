@@ -7,25 +7,34 @@
 </head>
 <body>
 
-<div class = topAndBottom>
-	<div class='top'>
-		<canvas id="my-canvas" width="600" height="600"></canvas>
-		<div id="about">
-			<div id='stats'>
-				<div id='treasure'>Treasure: 0</div>
-				<div id='health'>Health: 5</div>
-				<img id='pic' src="https://ih1.redbubble.net/image.284694125.9187/ap,220x200,12x12,1,ffffff,t-pad,220x200,ffffff.jpg">
-			</div>
-			<div id='buttons'>
-				<button id="start">START</button>
-				<button id="restart">RESTART</button>
-				<button id="instructions">INSTRUCTIONS</button>
+<div class = 'main'> 
+	<header>
+		<button id='independence'>INDEPENDENCE</button>
+		<button id='arizona'>RAISING CAGE</button>
+		<button id='hell'>GHOST</button>
+		<button id='kaz'>KAZ KAGE</button>
+		<button id='vamp'>VAMPIRE </button> 
+	</header>
+	<div class = 'topAndBottom' style='display:none;'>
+		<div class='top'>
+			<canvas id="my-canvas" width="600" height="600"></canvas>
+			<div id="about">
+				<div id='stats'>
+					<div id='treasure'>Treasure: 0</div>
+					<div id='health'>Health: 5</div>
+					<img id='nickPic' src="https://ih1.redbubble.net/image.284694125.9187/ap,220x200,12x12,1,ffffff,t-pad,220x200,ffffff.jpg">
+				</div>
+				<div id='buttons'>
+					<button id="start">START</button>
+					<button id="restart">RESTART</button>
+					<button id="instructions">INSTRUCTIONS</button>
+				</div>
 			</div>
 		</div>
-	</div>
 
-	<div class = 'bottom'>
-		<div id="rules" style='display: none;' > <div id='text'> You are Nick "The Cage Man" Cage, and it's your job to save the world. <br> In order to do this, you must collect five pieces of treasure. <br> <br> Use the arrow keys to move around the map. <br> <br> Be careful! Sean Bean is also looking for the treasure. If you run into him, your health will decrease. If it gets to zero, you will have failed your mission.</div></div>
+		<footer>
+			<div id="rules" style='display: none;' > <div id='text'> You are Nick "The Cage Man" Cage, and it's your job to save the world. <br> In order to do this, you must collect five pieces of treasure. <br> <br> Use the arrow keys to move around the map. <br> <br> Be careful! Sean Bean is also looking for the treasure. If you run into him, your health will decrease. If it gets to zero, you will have failed your mission.</div></div>
+		</footer>
 	</div>
 </div>
 
