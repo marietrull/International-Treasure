@@ -8,7 +8,7 @@ const ctx = canvas.getContext('2d');
 const move = 10;  				//how far he will move with each keystroke
 const villainCoord = [];		//array to store the villains' coordinates
 let treasurePoints = 0;			//variable to store treasure score
-let healthPoints = 3;			//variable to store health points
+let healthPoints = 5;			//variable to store health points
 let treasureX = 100;			//initial treasure x coordinate location
 let treasureY = 100;			//initial treasure y coordinate
 
@@ -22,7 +22,7 @@ const nickCage = {
 	initialize() {
 		//Method to setup Nick
 		this.body = {
-			x: 50,
+			x: 450,
 			y: 400,
 			r: 5,
 			e:0
@@ -30,21 +30,13 @@ const nickCage = {
 	}, //Method to draw Nick
 	drawBody() {
 		// Create an image element
-		var cageFace = document.createElement('IMG');
+		const cageFace = document.createElement('IMG');
  
 		// When the image is loaded, draw it
 		cageFace.onload = function () {
-
-		// ctx.save();
-
 		ctx.beginPath();
-		// ctx.arc(200 , 200,200,0,Math.PI*2, false);
-
-		// ctx.clip();
-
     	ctx.drawImage(cageFace, nickCage.body.x, nickCage.body.y);
-
-    	// ctx.restore();
+    	ctx.closePath();
 		}
  
 	// Specify the src to load the image
@@ -57,25 +49,25 @@ const nickCage = {
 document.addEventListener('keydown', function(event){
 	const key = event.keyCode;
 	if(key == 37 && nickCage.body.x > 0){
-		nickCage.body.x = nickCage.body.x-move;
+		nickCage.body.x = nickCage.body.x - move;
 		nickCage.direction = 'left';
 		collectTreasure();
 		villainCollide();
 		
 	} else if (key ==38 && nickCage.body.y > 0) {
-		nickCage.body.y = nickCage.body.y-move;
+		nickCage.body.y = nickCage.body.y - move;
 		nickCage.direction = 'up';
 		collectTreasure();
 		villainCollide();
 		
-	} else if (key==39 && nickCage.body.x < 600){
-		nickCage.body.x = nickCage.body.x+move;
+	} else if (key==39 && nickCage.body.x < 550){
+		nickCage.body.x = nickCage.body.x + move;
 		nickCage.direction = 'right';
 		collectTreasure();
 		villainCollide();
 		
-	} else if (key==40 && nickCage.body.y < 600){
-		nickCage.body.y = nickCage.body.y+move;
+	} else if (key==40 && nickCage.body.y < 550){
+		nickCage.body.y = nickCage.body.y + move;
 		nickCage.direction = 'down';
 		collectTreasure();
 		villainCollide();
@@ -118,7 +110,7 @@ const timer = () => {
 		time +=1;
 
 		//create a new villain every ten seconds
-		if (time % 10 === 0){
+		if (time % 5 === 0){
 			createVillain();
 
 		//move treasure every six seconds
@@ -131,11 +123,11 @@ const timer = () => {
 
 //FUNCTIONS TO GENERATE RANDOM COORDINATES
 const randX = () => {
-		return Math.floor(601 * Math.random());//Math.random will never allow us to get 255/we have to up it by one number. 
+		return Math.floor(551 * Math.random());//Math.random will never allow us to get 255/we have to up it by one number. 
 }
 
 const randY = () => {
-		return Math.floor(601* Math.random());//Math.random will never allow us to get 255/we have to up it by one number. 
+		return Math.floor(551* Math.random());//Math.random will never allow us to get 255/we have to up it by one number. 
 }
 
 
@@ -159,12 +151,13 @@ const drawVillain = ()  => {
 		let xCoord = villainCoord[i][0];
 		let yCoord = villainCoord[i][1];
 		
-		//actually draw the villain
-		ctx.beginPath();
-		ctx.arc(xCoord, yCoord, 5, 0, 2 * Math.PI);
-		ctx.fillStyle = "blue";
-		ctx.fill();
-		ctx.closePath();
+		const bean = document.createElement('IMG');
+		bean.onload = function () {
+			ctx.beginPath();
+    		ctx.drawImage(bean, xCoord, yCoord);
+    		ctx.closePath();
+			}
+		bean.src = "https://i.imgur.com/9ePZ2di.png";
 	}
 	// nickCage.drawBody()
 }
@@ -173,10 +166,13 @@ const drawVillain = ()  => {
 
 const drawTreasure = () => {
 	ctx.beginPath();
-	ctx.arc(treasureX, treasureY, 10, 0, 2 * Math.PI);
-	ctx.fillStyle = 'red';
-	ctx.fill();
-	ctx.closePath();
+	const treasurePic = document.createElement('IMG');
+	treasurePic.onload = function () {
+		ctx.beginPath();
+    	ctx.drawImage(treasurePic, treasureX, treasureY);
+    	ctx.closePath();
+	}
+	treasurePic.src = "https://i.imgur.com/Rx3n84Y.png";
 }
 
 //FUNCTION TO MOVE TREASURE
@@ -198,40 +194,40 @@ const villainCollide = ()  => {
 		let cageBodyY = nickCage.body.y;
 		let xCoord = villainCoord[i][0];
 		let yCoord = villainCoord[i][1];
-		const r = 10;
+		const r = 15;
 
 		if(cageBodyX + r > xCoord - r && cageBodyX - r < xCoord + r && cageBodyY - r < yCoord + r && cageBodyY + r > yCoord + r){
 			healthPoints -= 1;
-			// $('#pic').attr('src','https://i.pinimg.com/originals/9e/75/21/9e752154d02bc3ebdc9e07656d522e1b.jpg');
+			villainCoord.splice(i, 1);
+			createVillain();
 			if(healthPoints > 0){
 				$('#health').text("Health: " + healthPoints);
 				console.log("Nick was attacked by a Villain!");
 			} else {
-				window.alert("Sean Bean got your ass! Game over.")
+				window.alert("Sean Bean got to the treasure first! You have failed the world!")
 				location.reload();
 			}
 		} 
 	}
 }
+
  
 //FUNCTION FOR COLLISION DETECTION W/ VILLAIN
 const collectTreasure = () => {
 	let cageBodyX = nickCage.body.x;
 	let cageBodyY = nickCage.body.y;
-	const r = 10;
+	const r = 15;
 
-	for(let i = -5; i < 5; i++){
- 		if(cageBodyX + r > treasureX - r && cageBodyX - r < treasureX + r && cageBodyY - r < treasureY + r && cageBodyY + r > treasureY + r){
- 			console.log("Nick found his treasure!");
- 			moveTreasure();
- 			treasurePoints += 1;
- 			if(treasurePoints < 5){
- 				$('#treasure').text("Treasure: " + treasurePoints);
- 			} else {
- 				window.alert("You managed to collect all of the treasure! You Win!");
- 				location.reload();
- 			}
-		}
+ 	if(cageBodyX + r > treasureX - r && cageBodyX - r < treasureX + r && cageBodyY - r < treasureY + r && cageBodyY + r > treasureY + r){
+ 		console.log("Nick found his treasure!");
+ 		moveTreasure();
+ 		treasurePoints += 1;
+ 		if(treasurePoints < 5){
+ 			$('#treasure').text("Treasure: " + treasurePoints);
+ 		} else {
+ 			window.alert("You managed to collect all of the treasure! You Win!");
+ 			location.reload();
+ 		}
 	}
 }
 
