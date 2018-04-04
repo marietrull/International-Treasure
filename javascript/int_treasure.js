@@ -4,16 +4,19 @@ console.log("Nick-the-Cage-Man-Cage is about to explore for treasure.");
 const canvas = document.getElementById('my-canvas');
 const ctx = canvas.getContext('2d');
 
+
+//--------------------NICK CAGE------------------------------------//
+
+
 //CREATE CHARACTER
 const move = 10;  				//how far he will move with each keystroke
 const villainCoord = [];		//array to store the villains' coordinates
-const villain = document.createElement('IMG');  //villain image
+const treasure = document.createElement('img');
+let villainPic = "https://i.imgur.com/9ePZ2di.png";
+let treasurePic = 'https://i.imgur.com/Rx3n84Y.png';
 let treasurePoints = 0;			//variable to store treasure score
 let healthPoints = 5;			//variable to store health points
-let treasureX = 400;			//initial treasure x coordinate location
-let treasureY = 100;			//initial treasure y coordinate
-
-
+// obj w/ villain imgs?
 
 //Character Class
 const nickCage = {
@@ -46,6 +49,8 @@ const nickCage = {
 	
 }
 
+//--------------------MOVEMENT-------------------------//
+
 //SET EVENT LISTENERS FOR MOVEMENT
 document.addEventListener('keydown', function(event){
 	const key = event.keyCode;
@@ -54,7 +59,7 @@ document.addEventListener('keydown', function(event){
 		nickCage.direction = 'left';
 		collectTreasure();
 		villainCollide();
-		
+
 	} else if (key ==38 && nickCage.body.y > 0) {
 		nickCage.body.y = nickCage.body.y - move;
 		nickCage.direction = 'up';
@@ -83,54 +88,43 @@ document.addEventListener('keydown', function(event){
 
 });
 
+//--------------------BUTTONS----------------------//
+
+
 //PICK YOUR NICK BUTTON FUNCTIONALITY
-$('#arizona').on('click', () => {
-	$('.topAndBottom').toggle(0);
+$('#azNick').on('click', () => {
+	switchPage();
 	changeNick('https://i.imgur.com/v4AQ7Ck.jpg');
 	changeBack('https://i.imgur.com/7NejvCm.png');
 })
 
-$('#independence').on('click', () => {
-	$('.topAndBottom').toggle(0);
+$('#natNick').on('click', () => {
+	switchPage();
 	changeNick('https://i.imgur.com/507apQg.jpg');
 	changeBack('https://i.imgur.com/rDWs2S1.png');
 	
 })
 
-$('#kaz').on('click', () => {
-	$('.topAndBottom').toggle(0);
-	changeNick('https://i.imgur.com/B1K4WmO.jpg');
-	changeBack('https://i.imgur.com/FaGsyVr.png');
-	
-})
-
-$('#hell').on('click', () => {
-	$('.topAndBottom').toggle(0);
+$('#ghostNick').on('click', () => {
+	switchPage();
 	changeNick('https://i.imgur.com/dMQ2CeY.jpg');
 	changeBack('https://i.imgur.com/DUAEDBu.jpg');
+	setVillain('https://i.imgur.com/EuYgMkJ.png')
 })
 
-$('#vamp').on('click', () => {
-	$('.topAndBottom').toggle(0);
+$('#vampNick').on('click', () => {
+	switchPage();
 	changeNick('https://i.imgur.com/Id0TNTj.jpg');
 	changeBack('https://i.imgur.com/nF1Bbrj.jpg');
+	setVillain('https://i.imgur.com/acPH9gH.jpg');
 })
 
-//FUNCTION TO CHANGE CANVAS BACKGROUND
-
-const changeBack = (imageLink) => {
-	const image = "url("+imageLink+")"
-	$('#my-canvas').css('background-image', image);
-	
-}
-
-//FUNCTION TO CHANGE NICK
-
-const changeNick = (imageLink) => {
-	const image = imageLink;
-	//console.log(image, ' this is image lingk');
-	$('#nickPic').attr('src', image);
-}
+$('#wickerNick').on('click', () => {
+	switchPage();
+	changeNick('https://i.imgur.com/BFSHfrF.jpg');
+	changeBack('https://i.imgur.com/blfam3z.jpg');
+	// setVillain('https://i.imgur.com/acPH9gH.jpg');
+})
 
 //GIVE START BUTTON FUNCTIONALITY
 
@@ -148,6 +142,38 @@ $('#instructions').on('click', () =>{
 	$('#rules').toggle(0);
 })
 
+
+//--------------------FUNCTIONS TO UPDATE DISPLAY -----------------------//
+
+//FUNCTION TO HIDE HEADER + SHOW GAME
+
+const switchPage = () => {
+	$('.topAndBottom').toggle(0);
+	$('#pickNick').toggle();
+}
+
+//FUNCTION TO CHANGE CANVAS BACKGROUND
+
+const changeBack = (imageLink) => {
+	const image = "url("+imageLink+")"
+	$('#my-canvas').css('background-image', image);
+	
+}
+
+//FUNCTION TO CHANGE NICK
+
+const changeNick = (imageLink) => {
+	const image = imageLink;
+	//console.log(image, ' this is image lingk');
+	$('#nickPic').attr('src', image);
+}
+
+//FUNCTION TO CHANGE VILLAIN
+const setVillain = (imageLink) => {
+	villainPic = imageLink;
+}
+
+//--------------------TIMER + COORDINATES----------------------//
 
 // CREATE TIMER
 const timer = () => {
@@ -179,6 +205,10 @@ const randY = () => {
 		return Math.floor(551* Math.random());//Math.random will never allow us to get 255/we have to up it by one number. 
 }
 
+let treasureX = randX();			//initial treasure x coordinate location
+let treasureY = randY();
+
+//--------------------VILLAIN FUNCTIONS----------------------//
 
 //FUNCTION TO CREATE VILLAIN
 const createVillain = () => {
@@ -191,7 +221,9 @@ const createVillain = () => {
 	drawVillain();
 }
 
-//FUNCTION FOR DRAWING TREASURE
+//FUNCTION FOR DRAWING VILLAINS
+
+
 const drawVillain = ()  => {
 	// loop over our arrray of villains and draw each one
 
@@ -199,36 +231,16 @@ const drawVillain = ()  => {
 		// set coordinates for each villain	
 		let xCoord = villainCoord[i][0];
 		let yCoord = villainCoord[i][1];
+		const villain = document.createElement('img');  //villain image
+
 		villain.onload = function () {
 			ctx.beginPath();
     		ctx.drawImage(villain, xCoord, yCoord);
     		ctx.closePath();
 			}
-		villain.src = "https://i.imgur.com/9ePZ2di.png";
+		villain.src = villainPic;
 	}
 	// nickCage.drawBody()
-}
-
-//FUNCTION TO DRAW TREASURE
-
-const drawTreasure = () => {
-	ctx.beginPath();
-	const treasurePic = document.createElement('IMG');
-	treasurePic.onload = function () {
-		ctx.beginPath();
-    	ctx.drawImage(treasurePic, treasureX, treasureY);
-    	ctx.closePath();
-	}
-	treasurePic.src = "https://i.imgur.com/Rx3n84Y.png";
-}
-
-//FUNCTION TO MOVE TREASURE
-
-const moveTreasure = () => {
-	
-	treasureX = randX();
-	treasureY = randY();
-
 }
 
 
@@ -251,15 +263,40 @@ const villainCollide = ()  => {
 				$('#health').text("Health: " + healthPoints);
 				console.log("Nick was attacked by a Villain!");
 			} else {
-				window.alert("Sean Bean got to the treasure first! You have failed the world!")
+				window.alert("The bad guys got to the treasure first! You have failed the world!")
 				location.reload();
 			}
 		} 
 	}
 }
 
+
+//--------------------TREASURE FUNCTIONS----------------------//
+
+
+//FUNCTION TO DRAW TREASURE
+
+const drawTreasure = () => {
+	ctx.beginPath();
+	treasure.onload = function () {
+		ctx.beginPath();
+    	ctx.drawImage(treasure, treasureX, treasureY);
+    	ctx.closePath();
+	}
+	treasure.src = treasurePic;
+}
+
+//FUNCTION TO MOVE TREASURE
+
+const moveTreasure = () => {
+	
+	treasureX = randX();
+	treasureY = randY();
+
+}
+
  
-//FUNCTION FOR COLLISION DETECTION W/ VILLAIN
+//FUNCTION FOR COLLISION DETECTION W/ TREASURE
 const collectTreasure = () => {
 	let cageBodyX = nickCage.body.x;
 	let cageBodyY = nickCage.body.y;
