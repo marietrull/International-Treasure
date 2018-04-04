@@ -3,11 +3,13 @@ body{
 	font-family: 'Goudy Bookletter 1911', serif;
 }
 
+
 header {
-	background-color: white;
+	background-image: url("https://i.imgur.com/iwJd9D7.jpg");
+	background-position: 0 0;
 	border: 2px solid black;
 	margin-bottom: 20px;
-	height: 50px;
+	height: 100px;
 	text-align: center;
 	font-weight: bold;
 	font-size: 40px;
@@ -20,16 +22,17 @@ header {
 }
 
 #pickNick {
-	background-color: white;
+	background-image: url("https://i.imgur.com/iwJd9D7.jpg");
+	background-position: 0 -150px;
 	border: 2px solid black;
 	margin-left: auto;
 	margin-right: auto;
 	width: 100%;
-	height: 200px;
+	height: 250px;
 	display: flex;
 	flex-direction: column;
 	justify-content: space-around;
-	flex-grow: 1;
+	overflow: auto;
 }
 
 #nickPickText {
@@ -111,11 +114,12 @@ header {
 
 
 #rules{
-	background-color: white;
+	background-image: url("https://i.imgur.com/iwJd9D7.jpg");
+	background-position: 0 -220px;
 	border: 2px solid black;
 	margin-left: auto;
 	margin-right: auto;
-	height: 150px;
+	height: 200px;
 	margin-top: 15px;
 }
 
@@ -123,7 +127,8 @@ header {
 	padding: 10px;
 	text-align: justify;
 	line-height: 1.2;
-
+	font-weight: bold;
+	font-size: 19px;
 }
 
 

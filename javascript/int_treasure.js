@@ -93,37 +93,24 @@ document.addEventListener('keydown', function(event){
 
 //PICK YOUR NICK BUTTON FUNCTIONALITY
 $('#azNick').on('click', () => {
-	switchPage();
-	changeNick('https://i.imgur.com/v4AQ7Ck.jpg');
-	changeBack('https://i.imgur.com/7NejvCm.png');
+	changeNick('https://i.imgur.com/v4AQ7Ck.jpg','https://i.imgur.com/7NejvCm.png');
 })
 
 $('#natNick').on('click', () => {
-	switchPage();
-	changeNick('https://i.imgur.com/507apQg.jpg');
-	changeBack('https://i.imgur.com/rDWs2S1.png');
+	changeNick('https://i.imgur.com/507apQg.jpg','https://i.imgur.com/rDWs2S1.png' );
 	
 })
 
 $('#ghostNick').on('click', () => {
-	switchPage();
-	changeNick('https://i.imgur.com/dMQ2CeY.jpg');
-	changeBack('https://i.imgur.com/DUAEDBu.jpg');
-	setVillain('https://i.imgur.com/EuYgMkJ.png')
+	changeNick('https://i.imgur.com/dMQ2CeY.jpg','https://i.imgur.com/DUAEDBu.jpg');
 })
 
 $('#vampNick').on('click', () => {
-	switchPage();
-	changeNick('https://i.imgur.com/Id0TNTj.jpg');
-	changeBack('https://i.imgur.com/nF1Bbrj.jpg');
-	setVillain('https://i.imgur.com/acPH9gH.jpg');
+	changeNick('https://i.imgur.com/Id0TNTj.jpg','https://i.imgur.com/nF1Bbrj.jpg');
 })
 
 $('#wickerNick').on('click', () => {
-	switchPage();
-	changeNick('https://i.imgur.com/BFSHfrF.jpg');
-	changeBack('https://i.imgur.com/blfam3z.jpg');
-	// setVillain('https://i.imgur.com/acPH9gH.jpg');
+	changeNick('https://i.imgur.com/BFSHfrF.jpg','https://i.imgur.com/blfam3z.jpg' );
 })
 
 //GIVE START BUTTON FUNCTIONALITY
@@ -143,29 +130,21 @@ $('#instructions').on('click', () =>{
 })
 
 
-//--------------------FUNCTIONS TO UPDATE DISPLAY -----------------------//
+//--------------------FUNCTIONS BASED ON NICK PICK -----------------------//
 
-//FUNCTION TO HIDE HEADER + SHOW GAME
+//FUNCTION TO CHANGE NICK & MAP
 
-const switchPage = () => {
+const changeNick = (nickImage, mapImage) => {
+	//HIDE HEADER + SHOW GAME
 	$('.topAndBottom').toggle(0);
 	$('#pickNick').toggle();
-}
 
-//FUNCTION TO CHANGE CANVAS BACKGROUND
-
-const changeBack = (imageLink) => {
-	const image = "url("+imageLink+")"
-	$('#my-canvas').css('background-image', image);
-	
-}
-
-//FUNCTION TO CHANGE NICK
-
-const changeNick = (imageLink) => {
-	const image = imageLink;
-	//console.log(image, ' this is image lingk');
-	$('#nickPic').attr('src', image);
+	//Change the Map
+	const imageMap = "url("+mapImage+")"
+	$('#my-canvas').css('background-image', imageMap);
+	//Change Nick
+	const imageCage = nickImage;
+	$('#nickPic').attr('src', imageCage);
 }
 
 //FUNCTION TO CHANGE VILLAIN
@@ -205,8 +184,8 @@ const randY = () => {
 		return Math.floor(551* Math.random());//Math.random will never allow us to get 255/we have to up it by one number. 
 }
 
-let treasureX = randX();			//initial treasure x coordinate location
-let treasureY = randY();
+let treasureX = randX();			//initial treasure x coordinate 
+let treasureY = randY();			//initial treasure y coordinate
 
 //--------------------VILLAIN FUNCTIONS----------------------//
 
