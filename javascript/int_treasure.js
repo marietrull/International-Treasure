@@ -10,13 +10,13 @@ const ctx = canvas.getContext('2d');
 
 //CREATE CHARACTER
 const move = 10;  				//how far he will move with each keystroke
-const villainCoord = [];		//array to store the villains' coordinates
+let villainCoord = [];		//array to store the villains' coordinates
 const treasure = document.createElement('img');
 let villainPic = "https://i.imgur.com/9ePZ2di.png";
 let treasurePic = 'https://i.imgur.com/Rx3n84Y.png';
 let treasurePoints = 0;			//variable to store treasure score
 let healthPoints = 5;			//variable to store health points
-// obj w/ villain imgs?
+let time = 0;
 
 //Character Class
 const nickCage = {
@@ -66,7 +66,7 @@ document.addEventListener('keydown', function(event){
 		collectTreasure();
 		villainCollide();
 		
-	} else if (key==39 && nickCage.body.x < 550){
+	} else if (key==39 && nickCage.body.x < 750){
 		nickCage.body.x = nickCage.body.x + move;
 		nickCage.direction = 'right';
 		collectTreasure();
@@ -88,10 +88,9 @@ document.addEventListener('keydown', function(event){
 
 });
 
-//--------------------BUTTONS----------------------//
+//--------------------PICK YOUR NICK----------------------//
 
 
-//PICK YOUR NICK BUTTON FUNCTIONALITY
 $('#azNick').on('click', () => {
 	changeNick('https://i.imgur.com/v4AQ7Ck.jpg','https://i.imgur.com/7NejvCm.png');
 })
@@ -113,19 +112,30 @@ $('#wickerNick').on('click', () => {
 	changeNick('https://i.imgur.com/BFSHfrF.jpg','https://i.imgur.com/blfam3z.jpg' );
 })
 
-//GIVE START BUTTON FUNCTIONALITY
+$('#wizardNick').on('click', () => {
+	changeNick('https://i.imgur.com/OLvhUGP.jpg','https://i.imgur.com/8tgTNhb.png' );
+})
+
+//--------------------BUTTONS----------------------//
 
 $('#start').on('click', () => {
-	timer();
+	timerFunc();
 });
 
-//GIVE RESTART BUTTON FUNCTIONALITY
-$('#restart').on('click', () => {
+$('#clear').on('click', () =>{
+	clearBoard();
+	
+})
+
+$('#goBack').on('click', () => {
 	location.reload();
 });
 
-//GIVE INSTRUCTIONS BUTTON FUNCTIONALITY
-$('#instructions').on('click', () =>{
+$('#pause').on('click', () =>{
+	clearInterval(timer);
+})
+
+$('#hideMe').on('click', () => {
 	$('#rules').toggle(0);
 })
 
@@ -152,14 +162,13 @@ const setVillain = (imageLink) => {
 	villainPic = imageLink;
 }
 
-//--------------------TIMER + COORDINATES----------------------//
+//--------------------TIMER + COORDINATES + CLEAR----------------------//
 
 // CREATE TIMER
-const timer = () => {
-	let time = 0;
+const timerFunc = () => {
 	let treasure = 0;
 	console.log(time);
-	setInterval(() => {
+	timer = setInterval(() => {
 		//track the time
 		time +=1;
 
@@ -171,13 +180,13 @@ const timer = () => {
 		} else if (time % 6 === 0){
 			moveTreasure();
 		}
-		//console.log(time);
+		console.log(time);
 	}, 1000);
 }
 
 //FUNCTIONS TO GENERATE RANDOM COORDINATES
 const randX = () => {
-		return Math.floor(551 * Math.random());//Math.random will never allow us to get 255/we have to up it by one number. 
+		return Math.floor(751 * Math.random());//Math.random will never allow us to get 255/we have to up it by one number. 
 }
 
 const randY = () => {
@@ -186,6 +195,21 @@ const randY = () => {
 
 let treasureX = randX();			//initial treasure x coordinate 
 let treasureY = randY();			//initial treasure y coordinate
+
+
+//FUNCTION TO RESET THE BOARD
+
+const clearBoard = () => {
+	clearInterval(timer);
+	time = 0;
+	ctx.clearRect(0,0, canvas.width, canvas.height);
+	villainCoord = [];
+	nickCage.drawBody();
+	drawTreasure();
+	
+}
+
+
 
 //--------------------VILLAIN FUNCTIONS----------------------//
 
@@ -243,6 +267,7 @@ const villainCollide = ()  => {
 				console.log("Nick was attacked by a Villain!");
 			} else {
 				window.alert("The bad guys got to the treasure first! You have failed the world!")
+				clearTimeout(timer);
 				location.reload();
 			}
 		} 
@@ -289,7 +314,7 @@ const collectTreasure = () => {
  			$('#treasure').text("Treasure: " + treasurePoints);
  		} else {
  			window.alert("You managed to collect all of the treasure! You Win!");
- 			location.reload();
+ 			clearTimeout(timer);
  		}
 	}
 }
