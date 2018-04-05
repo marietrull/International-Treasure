@@ -45,11 +45,24 @@
 		<footer>
 			
 			<div id="rules" style='display:none;'>
-				 <div id='text'> You are Nick "The Cage Man" Cage, and it's your job to save the world. <br> In order to do this, you must collect five pieces of treasure. <br> <br> Use the arrow keys to move around the map. <br> <br> Be careful! There are bad guys that are also looking for the treasure. If you run into them, your health will decrease. If it gets to zero, you will have failed your mission.</div></div>
+				 <div id='text'> You are Nick "The Cage Man" Cage, and it's your job to save the world. <br> In order to do this, you must collect five pieces of treasure. <br> <br> Use the arrow keys to move around the map. <br> <br> Be careful! There are bad guys that are also looking for the treasure. If you run into them, your health will decrease. If it gets to zero, you will have failed your mission. </div></div>
 		</footer>
 	</div>
 </div>
 
+	 <div class="modalWin">
+        <div class="modal-content">
+            <span class="close-button-win">&times;</span>
+            <h1>You got the treasure! Close this window to begin the next round.</h1>
+        </div>
+    </div>
+
+    <div class="modalLose">
+        <div class="modal-content">
+            <span class="close-button-lose">&times;</span>
+            <h1>The bad guys got to the treasure first - you have failed the world!</h1>
+        </div>
+    </div>
 
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 	<script type="text/javascript" src="javascript\int_treasure.js"></script>

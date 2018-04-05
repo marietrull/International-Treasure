@@ -27,6 +27,57 @@ header {
 	line-height: 2.5;
 }
 
+.modalLose {
+    position: fixed;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    visibility: hidden;
+}
+
+.modalWin {
+    position: fixed;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    visibility: hidden;
+}
+
+.modal-content {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background-color: white;
+    padding: 1rem 1.5rem;
+    width: 24rem;
+    border: solid black 10px;
+  /*  border-radius: 0.5rem;*/
+}
+
+.close-button {
+    float: right;
+    width: 1.5rem;
+    line-height: 1.5rem;
+    text-align: center;
+    cursor: pointer;
+    border-radius: 0.25rem;
+    background-color: lightgray;
+}
+
+.close-button:hover {
+    background-color: darkgray;
+}
+    
+.show-modal {
+    opacity: 1;
+    visibility: visible;
+    transform: scale(1.0);
+    transition: visibility 0s linear 0s, opacity 0.25s 0s, transform 0.25s;
+ }
+
 
 .main {
 	display: flex;
@@ -106,7 +157,7 @@ header {
 	display: flex;
 	margin-left: auto;
 	margin-right: auto;
-	justify-content: space-around;
+	justify-content: space-between;
 }
 
 .bottom {
@@ -131,7 +182,7 @@ header {
 	border: 2px solid black;
 	margin-left: auto;
 	margin-right: auto;
-	height: 200px;
+	height: 175px;
 	margin-top: 15px;
 }
 
@@ -155,7 +206,7 @@ header {
 
 #stats {
 	padding: 5px;
-	background-color: white;
+	background-image: url("https://i.imgur.com/vi0zFuu.jpg");
 	border: 2px solid black;
 	height: 60%;
 	display: flex;
@@ -196,4 +247,27 @@ header {
  	border: 1px solid black;
 	flex-grow: 1;
  }
+
+#loserPic{
+ 	display: block;
+    margin-left: auto;
+    margin-right: auto;
+ }
+
+ #loseText {
+	padding: 10px;
+	text-align: center;
+	font-weight: bold;
+	font-size: 30px;
+}
+
+#loseFoot {
+	background-image: url("https://i.imgur.com/iwJd9D7.jpg");
+	border: 2px solid black;
+	margin-left: auto;
+	margin-right: auto;
+	height: 100px;
+	margin-top: 15px;
+
+}
 

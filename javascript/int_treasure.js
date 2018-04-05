@@ -189,7 +189,7 @@ const timerFunc = () => {
 		if (time % 2 === 0) {
 			createVillain();
 		}
-	} else if (roundPoints >= 4){
+	} else if (roundPoints >=  4){
 		createVillain();
 	}
 
@@ -226,6 +226,35 @@ const clearBoard = () => {
 	drawTreasure();
 	
 }
+
+//FUNCTION FOR WHEN THE VILLAIN WINS
+
+//MODAL FUNCTIONS FOR WHEN THE PLAYER LOSES
+var winModal = document.querySelector(".modalWin");
+var loseModal = document.querySelector(".modalLose");
+var closeButtonWin = document.querySelector(".close-button-win");
+var closeButtonLose = document.querySelector(".close-button-lose");
+
+function toggleModalWin() {
+	clearInterval(timer);
+    winModal.classList.toggle("show-modal");
+    clearBoard();
+}
+
+function toggleModalLose() {
+	clearInterval(timer);
+    loseModal.classList.toggle("show-modal");
+    clearBoard();
+}
+
+closeButtonWin.addEventListener("click",  () => {
+	toggleModalWin();
+})
+
+closeButtonLose.addEventListener("click", () => {
+	toggleModalLose();
+	
+})
 
 
 
@@ -284,9 +313,8 @@ const villainCollide = ()  => {
 				$('#health').text("Health: " + healthPoints);
 				console.log("Nick was attacked by a Villain!");
 			} else {
-				window.alert("The bad guys got to the treasure first! You have failed the world!")
-				clearTimeout(timer);
-				location.reload();
+				toggleModalLose();
+				// youLose();
 			}
 		} 
 	}
@@ -332,9 +360,8 @@ const collectTreasure = () => {
  			$('#treasure').text("Treasure: " + treasurePoints);
  		} else {
  			roundPoints +=1;
- 			clearBoard();
- 			window.alert("You managed to collect all of the treasure! You Win!");
  			clearTimeout(timer);
+ 			toggleModalWin();
  		}
 	}
 }
