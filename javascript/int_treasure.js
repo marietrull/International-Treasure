@@ -12,8 +12,9 @@ const ctx = canvas.getContext('2d');
 const move = 10;  				//how far he will move with each keystroke
 let villainCoord = [];		//array to store the villains' coordinates
 const treasure = document.createElement('img');
-let villainPic = "https://i.imgur.com/9ePZ2di.png";
+let villainPic = "https://i.imgur.com/mzsPph3.png";
 let treasurePic = 'https://i.imgur.com/Rx3n84Y.png';
+let cagePic = 'https://i.imgur.com/feqrYDk.png';
 let treasurePoints = 0;			//variable to store treasure score
 let healthPoints = 5;			//variable to store health points
 let roundPoints = 1;
@@ -45,9 +46,8 @@ const nickCage = {
 		}
  
 	// Specify the src to load the image
-	cageFace.src = "https://i.imgur.com/pBMjycK.png";
+	cageFace.src = cagePic;
 	},
-	
 }
 
 //--------------------MOVEMENT-------------------------//
@@ -67,13 +67,13 @@ document.addEventListener('keydown', function(event){
 		collectTreasure();
 		villainCollide();
 		
-	} else if (key==39 && nickCage.body.x < 750){
+	} else if (key==39 && nickCage.body.x < 725){
 		nickCage.body.x = nickCage.body.x + move;
 		nickCage.direction = 'right';
 		collectTreasure();
 		villainCollide();
 		
-	} else if (key==40 && nickCage.body.y < 550){
+	} else if (key==40 && nickCage.body.y < 525){
 		nickCage.body.y = nickCage.body.y + move;
 		nickCage.direction = 'down';
 		collectTreasure();
@@ -93,28 +93,28 @@ document.addEventListener('keydown', function(event){
 
 
 $('#azNick').on('click', () => {
-	changeNick('https://i.imgur.com/v4AQ7Ck.jpg','https://i.imgur.com/7NejvCm.png');
+	changeNick('https://i.imgur.com/v4AQ7Ck.jpg','https://i.imgur.com/7NejvCm.png', 'https://i.imgur.com/RwV5EEk.png','https://i.imgur.com/R0Lak5t.png','https://i.imgur.com/yyWD6da.png');
 })
 
 $('#natNick').on('click', () => {
-	changeNick('https://i.imgur.com/507apQg.jpg','https://i.imgur.com/rDWs2S1.png' );
+	changeNick('https://i.imgur.com/507apQg.jpg','https://i.imgur.com/rDWs2S1.png','https://i.imgur.com/mzsPph3.png','https://i.imgur.com/feqrYDk.png','https://i.imgur.com/KQNKO65.png');
 	
 })
 
 $('#ghostNick').on('click', () => {
-	changeNick('https://i.imgur.com/dMQ2CeY.jpg','https://i.imgur.com/DUAEDBu.jpg');
+	changeNick('https://i.imgur.com/dMQ2CeY.jpg','https://i.imgur.com/DUAEDBu.jpg', 'https://i.imgur.com/lpY4ehb.png','https://i.imgur.com/ztAWaku.png','https://i.imgur.com/dbw3yI3.png');
 })
 
 $('#vampNick').on('click', () => {
-	changeNick('https://i.imgur.com/Id0TNTj.jpg','https://i.imgur.com/nF1Bbrj.jpg');
+	changeNick('https://i.imgur.com/Id0TNTj.jpg','https://i.imgur.com/nF1Bbrj.jpg','https://i.imgur.com/TEslcbm.png','https://i.imgur.com/LgfbzfZ.png','https://i.imgur.com/eBiKUzX.png');
 })
 
 $('#wickerNick').on('click', () => {
-	changeNick('https://i.imgur.com/BFSHfrF.jpg','https://i.imgur.com/blfam3z.jpg' );
+	changeNick('https://i.imgur.com/BFSHfrF.jpg','https://i.imgur.com/blfam3z.jpg', 'https://i.imgur.com/vrK4jwJ.png','https://i.imgur.com/AzNCnVh.png','https://i.imgur.com/SxeqWvc.png');
 })
 
 $('#wizardNick').on('click', () => {
-	changeNick('https://i.imgur.com/OLvhUGP.jpg','https://i.imgur.com/8tgTNhb.png' );
+	changeNick('https://i.imgur.com/OLvhUGP.jpg','https://i.imgur.com/8tgTNhb.png','https://i.imgur.com/qlFHNhA.png','https://i.imgur.com/xlEBuHR.png','https://i.imgur.com/sjc6U4M.png');
 })
 
 //--------------------BUTTONS----------------------//
@@ -145,7 +145,7 @@ $('#hideMe').on('click', () => {
 
 //FUNCTION TO CHANGE NICK & MAP
 
-const changeNick = (nickImage, mapImage) => {
+const changeNick = (nickImage, mapImage, villainFace, cageFace, treasureIcon) => {
 	//HIDE HEADER + SHOW GAME
 	$('.topAndBottom').toggle(0);
 	$('#pickNick').toggle();
@@ -153,9 +153,21 @@ const changeNick = (nickImage, mapImage) => {
 	//Change the Map
 	const imageMap = "url("+mapImage+")"
 	$('#my-canvas').css('background-image', imageMap);
-	//Change Nick
+	//Change Nick Square
 	const imageCage = nickImage;
 	$('#nickPic').attr('src', imageCage);
+	//Change Villain
+	villainPic = villainFace;
+	//Change Nick's Game Icon
+	cagePic = cageFace;
+	//Change Treasure Icon
+	treasurePic = treasureIcon;
+
+
+	nickCage.initialize();
+	nickCage.drawBody();
+	drawTreasure();
+
 }
 
 //FUNCTION TO CHANGE VILLAIN
@@ -303,7 +315,7 @@ const villainCollide = ()  => {
 		let cageBodyY = nickCage.body.y;
 		let xCoord = villainCoord[i][0];
 		let yCoord = villainCoord[i][1];
-		const r = 15;
+		const r = 30;
 
 		if(cageBodyX + r > xCoord - r && cageBodyX - r < xCoord + r && cageBodyY - r < yCoord + r && cageBodyY + r > yCoord + r){
 			healthPoints -= 1;
@@ -350,7 +362,7 @@ const moveTreasure = () => {
 const collectTreasure = () => {
 	let cageBodyX = nickCage.body.x;
 	let cageBodyY = nickCage.body.y;
-	const r = 15;
+	const r = 30;
 
  	if(cageBodyX + r > treasureX - r && cageBodyX - r < treasureX + r && cageBodyY - r < treasureY + r && cageBodyY + r > treasureY + r){
  		console.log("Nick found his treasure!");
@@ -367,7 +379,7 @@ const collectTreasure = () => {
 }
 
 
-//CALL FUNCTIONS
-nickCage.initialize();
-nickCage.drawBody();
-drawTreasure();
+// //CALL FUNCTIONS
+// nickCage.initialize();
+// nickCage.drawBody();
+// drawTreasure();

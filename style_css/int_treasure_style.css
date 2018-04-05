@@ -57,7 +57,7 @@ header {
   /*  border-radius: 0.5rem;*/
 }
 
-.close-button {
+.close-button-win {
     float: right;
     width: 1.5rem;
     line-height: 1.5rem;
@@ -67,7 +67,21 @@ header {
     background-color: lightgray;
 }
 
-.close-button:hover {
+.close-button-win:hover {
+    background-color: darkgray;
+}
+
+.close-button-lose {
+    float: right;
+    width: 1.5rem;
+    line-height: 1.5rem;
+    text-align: center;
+    cursor: pointer;
+    border-radius: 0.25rem;
+    background-color: lightgray;
+}
+
+.close-button-lose:hover {
     background-color: darkgray;
 }
     
