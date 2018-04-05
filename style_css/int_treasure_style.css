@@ -5,10 +5,12 @@ html{
 body{
 	height: 100%;
     margin: 0;
-    padding: 10px;
+    padding-right: 10px;
+    padding-left: 10px;
     background-repeat: no-repeat;
     background-attachment: fixed;
 	background: linear-gradient(to bottom right, #B28C6B, #663300);
+	background-size: cover;
 	font-family: 'Goudy Bookletter 1911', serif;
 }
 

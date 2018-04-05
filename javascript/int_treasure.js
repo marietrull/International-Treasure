@@ -16,6 +16,7 @@ let villainPic = "https://i.imgur.com/9ePZ2di.png";
 let treasurePic = 'https://i.imgur.com/Rx3n84Y.png';
 let treasurePoints = 0;			//variable to store treasure score
 let healthPoints = 5;			//variable to store health points
+let roundPoints = 1;
 let time = 0;
 
 //Character Class
@@ -170,17 +171,29 @@ const timerFunc = () => {
 	console.log(time);
 	timer = setInterval(() => {
 		//track the time
-		time +=1;
+	time +=1;
 
-		//create a new villain every ten seconds
+	if (time % 6 === 0){
+		moveTreasure();
+	}
+
+	if (roundPoints === 1){
 		if (time % 5 === 0){
 			createVillain();
-
-		//move treasure every six seconds
-		} else if (time % 6 === 0){
-			moveTreasure();
+		} 
+	} else if (roundPoints === 2) {
+		if (time % 3 === 0){
+			createVillain();
 		}
-		console.log(time);
+	} else if (roundPoints === 3){
+		if (time % 2 === 0) {
+			createVillain();
+		}
+	} else if (roundPoints >= 4){
+		createVillain();
+	}
+
+	console.log(time);
 	}, 1000);
 }
 
@@ -202,6 +215,11 @@ let treasureY = randY();			//initial treasure y coordinate
 const clearBoard = () => {
 	clearInterval(timer);
 	time = 0;
+	healthPoints = 5;
+	treasurePoints = 0;
+	$('#treasure').text("Treasure: " + treasurePoints);
+	$('#health').text("Health: " + healthPoints);
+	$('#round').text("Round: " + roundPoints);
 	ctx.clearRect(0,0, canvas.width, canvas.height);
 	villainCoord = [];
 	nickCage.drawBody();
@@ -313,6 +331,8 @@ const collectTreasure = () => {
  		if(treasurePoints < 5){
  			$('#treasure').text("Treasure: " + treasurePoints);
  		} else {
+ 			roundPoints +=1;
+ 			clearBoard();
  			window.alert("You managed to collect all of the treasure! You Win!");
  			clearTimeout(timer);
  		}
