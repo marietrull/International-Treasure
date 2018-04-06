@@ -315,7 +315,7 @@ const villainCollide = ()  => {
 		let cageBodyY = nickCage.body.y;
 		let xCoord = villainCoord[i][0];
 		let yCoord = villainCoord[i][1];
-		const r = 30;
+		const r = 50;
 
 		if(cageBodyX + r > xCoord - r && cageBodyX - r < xCoord + r && cageBodyY - r < yCoord + r && cageBodyY + r > yCoord + r){
 			healthPoints -= 1;
@@ -362,7 +362,7 @@ const moveTreasure = () => {
 const collectTreasure = () => {
 	let cageBodyX = nickCage.body.x;
 	let cageBodyY = nickCage.body.y;
-	const r = 30;
+	const r = 50;
 
  	if(cageBodyX + r > treasureX - r && cageBodyX - r < treasureX + r && cageBodyY - r < treasureY + r && cageBodyY + r > treasureY + r){
  		console.log("Nick found his treasure!");
